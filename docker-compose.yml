@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  app:
+    build: ./
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/go-blog
+    depends_on:
+      - database
+    container_name: go-api-starter
+    env_file: 
+      - .env
+
+  database:
+    image: mysql:latest
+    env_file:
+      - .env
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PORT: ${DB_PORT}
+    container_name: go-api-starter-db
+    ports:
+      - 3306:${DB_PORT}
+    volumes:
+      - go-api-starter-data:/var/lib/mysql 
+
+# persisted storage
+volumes:
+  go-api-starter-data:
