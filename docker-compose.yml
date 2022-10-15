@@ -6,7 +6,7 @@ services:
     ports:
       - ${APP_PORT}:${APP_PORT}
     volumes:
-      - .:/go-blog
+      - .:/go-api-starter
     depends_on:
       - database
     container_name: go-api-starter

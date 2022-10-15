@@ -3,7 +3,7 @@ module github.com/dev-parvej/go-api-starter
 go 1.19
 
 require (
-	github.com/dev-parvej/go-js-array-methods v1.0.0 // indirect
+	github.com/dev-parvej/js_array_method v1.0.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

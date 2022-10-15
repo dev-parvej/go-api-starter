@@ -1,5 +1,5 @@
-github.com/dev-parvej/go-js-array-methods v1.0.0 h1:o82YtKyB75s1FnciFxkK9YDTKcjEXSzBnsjOtIMay4I=
-github.com/dev-parvej/go-js-array-methods v1.0.0/go.mod h1:VezOiP/xhZcEy6MD2P5Zk7WaynD/p9QqOLfekduS2yo=
+github.com/dev-parvej/js_array_method v1.0.0 h1:12yUF5+L+5SDDf8zSFimQZeZ5oHufZtzk+KFYAjYV64=
+github.com/dev-parvej/js_array_method v1.0.0/go.mod h1:KSFqJ3iEl1h/0Hk/lTwVu586T6k45BLD1G67fz1Tn7g=
 github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
 github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
