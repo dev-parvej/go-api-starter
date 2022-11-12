@@ -26,7 +26,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	db.DB().First(&existingUser, "email=?", createUserDto.Email)
 
 	if !existingUser.IsEmpty() {
-		util.Res.Writer(w).Status422().Data("Email already in use")
+		util.Res.Writer(w).Status422().Data(map[string]any{"message": "UniqueEmail"})
 		return
 	}
 
