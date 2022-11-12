@@ -1,5 +1,3 @@
-github.com/dev-parvej/js_array_method v1.0.0 h1:12yUF5+L+5SDDf8zSFimQZeZ5oHufZtzk+KFYAjYV64=
-github.com/dev-parvej/js_array_method v1.0.0/go.mod h1:KSFqJ3iEl1h/0Hk/lTwVu586T6k45BLD1G67fz1Tn7g=
 github.com/dev-parvej/js_array_method v1.0.1 h1:Dlz0le/0Yq3KMMb58HqWklGWBGl2NvVucQYpO7MkrhI=
 github.com/dev-parvej/js_array_method v1.0.1/go.mod h1:KSFqJ3iEl1h/0Hk/lTwVu586T6k45BLD1G67fz1Tn7g=
 github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
@@ -17,9 +15,6 @@ github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=
 github.com/joho/godotenv v1.4.0/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 golang.org/x/crypto v0.2.0 h1:BRXPfhNivWL5Yq0BGQ39a2sW6t44aODpfxkWjYdzewE=
 golang.org/x/crypto v0.2.0/go.mod h1:hebNnKkNXi2UzZN1eVRvBB7co0a+JxK6XbPiWVs/3J4=
-golang.org/x/text v0.3.8 h1:nAL+RVCQ9uMn3vJZbV+MRnydTJFPf8qqY42YiA6MrqY=
-golang.org/x/text v0.3.8/go.mod h1:E6s5w1FMmriuDzIBO73fBruAKo1PCIq6d2Q6DHfQ8WQ=
-golang.org/x/text v0.4.0/go.mod h1:mrYo+phRRbMaCq/xk9113O4dZlRixOauAjOtrjsXDZ8=
 gorm.io/driver/mysql v1.4.1 h1:4InA6SOaYtt4yYpV1NF9B2kvUKe9TbvUd1iWrvxnjic=
 gorm.io/driver/mysql v1.4.1/go.mod h1:sSIebwZAVPiT+27jK9HIwvsqOGKx3YMPmrA3mBJR10c=
 gorm.io/gorm v1.23.8/go.mod h1:l2lP/RyAtc1ynaTjFksBde/O8v9oOGIApu2/xRitmZk=
