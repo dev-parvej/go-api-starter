@@ -11,8 +11,6 @@ import (
 
 	"github.com/dev-parvej/go-api-starter-sql/config"
 	"github.com/iancoleman/strcase"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -116,8 +114,12 @@ func migrateDatabase(dbInstance *gorm.DB, files []os.FileInfo) {
 
 func rollbackMigration(dbInstance *gorm.DB, files []Migration) {
 	for _, file := range files {
-		splitted := strings.Split(file.Migration, "_")
-		functionName := "Down" + cases.Title(language.English).String(strings.ReplaceAll(splitted[1], ".go", ""))
+
+		fileName := strings.ReplaceAll(file.Migration, ".go", "")
+		nameSlice := strings.Split(fileName, "-")
+
+		postFix := strings.Join(append(nameSlice[:0], nameSlice[1:]...), "-")
+		functionName := "Down" + strcase.ToCamel(postFix)
 
 		migrator := Migrator{}
 		log.Default().Println("Roll backing migration", file.Migration)
