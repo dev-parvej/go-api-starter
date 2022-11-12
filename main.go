@@ -33,6 +33,7 @@ func main() {
 	r.Use(middleware.ApplyJsonHeader)
 	routes.RouteHandler(r)
 	routes.UserRouteHandler(r)
+	routes.AuthRouteHandler(r)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", config.Get("APP_PORT")), r))
 }

@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Connection() *gorm.DB {
+func connection() *gorm.DB {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		config.Get("DB_USER"),
@@ -28,13 +28,17 @@ func Connection() *gorm.DB {
 }
 
 func Model(model interface{}) *gorm.DB {
-	dbInstance := Connection()
+	dbInstance := connection()
 
 	return dbInstance.Model(model)
 }
 
 func Table(table string) *gorm.DB {
-	dbInstance := Connection()
+	dbInstance := connection()
 
 	return dbInstance.Table(table)
+}
+
+func DB() *gorm.DB {
+	return connection()
 }

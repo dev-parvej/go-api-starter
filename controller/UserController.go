@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/dev-parvej/go-api-starter-sql/db"
@@ -18,8 +17,16 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	errors := util.ValidateStruct(createUserDto)
 
 	if errors != nil {
-		log.Default().Println(errors.Error())
-		util.JsonEncoder(w, errors.Error())
+		util.Res.Writer(w).Status422().Data(errors.Error())
+		return
+	}
+
+	var existingUser models.User
+
+	db.DB().First(&existingUser, "email=?", createUserDto.Email)
+
+	if !existingUser.IsEmpty() {
+		util.Res.Writer(w).Status422().Data("Email already in use")
 		return
 	}
 
@@ -34,5 +41,5 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	db.Model(models.User{}).Create(&user)
 
-	util.JsonEncoder(w, user)
+	util.Res.Writer(w).Status().Data(user)
 }
