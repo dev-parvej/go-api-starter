@@ -29,6 +29,7 @@ func main() {
 	* You can always add multiple handler. There is no limitation
 	 */
 	routes.RouteHandler(r)
+	routes.UserRouteHandler(r)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", config.Get("APP_PORT")), r))
 }

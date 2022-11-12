@@ -10,7 +10,8 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
-	golang.org/x/text v0.3.8 // indirect
+	golang.org/x/crypto v0.2.0 // indirect
+	golang.org/x/text v0.4.0 // indirect
 	gorm.io/driver/mysql v1.4.1 // indirect
 	gorm.io/gorm v1.24.0 // indirect
 )
