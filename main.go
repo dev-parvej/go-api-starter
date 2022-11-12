@@ -9,11 +9,13 @@ import (
 
 	"github.com/dev-parvej/go-api-starter-sql/config"
 	db "github.com/dev-parvej/go-api-starter-sql/db/migration"
+	"github.com/dev-parvej/go-api-starter-sql/middleware"
 	"github.com/dev-parvej/go-api-starter-sql/routes"
 	"github.com/gorilla/mux"
 )
 
 func main() {
+	// To handle db related command
 	if len(os.Args) > 1 {
 		migrateAction := os.Args[1]
 		if strings.Contains(migrateAction, "db") {
@@ -28,6 +30,7 @@ func main() {
 	/**
 	* You can always add multiple handler. There is no limitation
 	 */
+	r.Use(middleware.ApplyJsonHeader)
 	routes.RouteHandler(r)
 	routes.UserRouteHandler(r)
 
