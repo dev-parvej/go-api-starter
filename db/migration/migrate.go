@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/dev-parvej/go-api-starter-sql/config"
+	"github.com/iancoleman/strcase"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/driver/mysql"
@@ -18,7 +19,7 @@ import (
 
 const (
 	MIGRATE            = "db:migrate"
-	CREATE_MIGRATION   = "db:create_migration"
+	CREATE_MIGRATION   = "db:create-migration"
 	ROLLBACK_MIGRATION = "db:rollback"
 )
 
@@ -53,7 +54,7 @@ func Migrate(action string) {
 		if purpose == "" {
 			log.Fatal("Purpose can not be empty")
 		}
-		fileName := folderName + time.Now().Format("20060102150405") + "_" + purpose + ".go"
+		fileName := folderName + time.Now().Format("20060102150405") + "-" + purpose + ".go"
 		createMigration(purpose, fileName)
 	} else if action == ROLLBACK_MIGRATION {
 		if !MigrateConnection().Migrator().HasTable("migrations") {
@@ -64,6 +65,8 @@ func Migrate(action string) {
 		migrations := []Migration{}
 		MigrateConnection().Raw("SELECT * FROM migrations where `batch`= (select Max(`batch`) from migrations) Order By id desc").Find(&migrations)
 		rollbackMigration(MigrateConnection(), migrations)
+	} else {
+		log.Fatal("Invalid db option")
 	}
 }
 
@@ -89,8 +92,11 @@ func migrateDatabase(dbInstance *gorm.DB, files []os.FileInfo) {
 			continue
 		}
 
-		splitted := strings.Split(file.Name(), "_")
-		functionName := "Up" + cases.Title(language.English).String(strings.ReplaceAll(splitted[1], ".go", ""))
+		fileName := strings.ReplaceAll(file.Name(), ".go", "")
+		nameSlice := strings.Split(fileName, "-")
+
+		postFix := strings.Join(append(nameSlice[:0], nameSlice[1:]...), "-")
+		functionName := "Up" + strcase.ToCamel(postFix)
 
 		migrator := Migrator{}
 
@@ -128,7 +134,7 @@ func rollbackMigration(dbInstance *gorm.DB, files []Migration) {
 }
 
 func createMigration(purpose string, fileName string) {
-	migrationTemplate := MigrationTemplate(purpose)
+	migrationTemplate := MigrationTemplate(strcase.ToCamel(purpose))
 
 	err := ioutil.WriteFile(
 		fileName,
@@ -141,5 +147,5 @@ func createMigration(purpose string, fileName string) {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Migration %s roll backed successfully", fileName)
+	fmt.Printf("Migration %s created successfully", fileName)
 }
