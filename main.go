@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/dev-parvej/go-api-starter/config"
-	"github.com/dev-parvej/go-api-starter/controller"
-	db "github.com/dev-parvej/go-api-starter/db/migration"
+	"github.com/dev-parvej/go-api-starter-sql/config"
+	db "github.com/dev-parvej/go-api-starter-sql/db/migration"
+	"github.com/dev-parvej/go-api-starter-sql/routes"
 	"github.com/gorilla/mux"
 )
 
@@ -25,8 +25,10 @@ func main() {
 	fmt.Println("GO API starter with mysql and docker")
 	fmt.Printf(":%s", config.Get("APP_PORT"))
 	r := mux.NewRouter()
-
-	r.HandleFunc("/", controller.ServeHome)
+	/**
+	* You can always add multiple handler. There is no limitation
+	 */
+	routes.RouteHandler(r)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", config.Get("APP_PORT")), r))
 }

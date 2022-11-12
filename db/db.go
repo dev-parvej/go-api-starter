@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/dev-parvej/go-api-starter/config"
+	"github.com/dev-parvej/go-api-starter-sql/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

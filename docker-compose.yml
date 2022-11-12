@@ -6,10 +6,10 @@ services:
     ports:
       - ${APP_PORT}:${APP_PORT}
     volumes:
-      - .:/go-api-starter
+      - .:/go-api-starter-sql
     depends_on:
       - database
-    container_name: go-api-starter
+    container_name: go-api-starter-sql
     env_file: 
       - .env
 

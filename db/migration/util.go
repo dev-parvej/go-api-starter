@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/dev-parvej/go-api-starter/util"
+	"github.com/dev-parvej/go-api-starter-sql/util"
 )
 
 func MigrationTemplate(purpose string) string {
