@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/go-playground/validator"
 )
@@ -36,4 +37,10 @@ func ValidateStruct(form interface{}) error {
 
 	return nil
 
+}
+
+func ParseInt(s string) int {
+	i, _ := strconv.Atoi(s)
+
+	return i
 }
