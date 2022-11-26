@@ -9,7 +9,6 @@ import (
 	"github.com/dev-parvej/go-api-starter-sql/dto"
 	"github.com/dev-parvej/go-api-starter-sql/models"
 	"github.com/dev-parvej/go-api-starter-sql/util"
-	"github.com/golang-jwt/jwt/v4"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -32,11 +31,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !util.ComparePassword(user.Password, loginDto.Password) {
-		util.Res.Status422().Writer(w).Data(map[string]string{"message": "inCorrectEmailPassword"})
+		util.Res.Status403().Writer(w).Data(map[string]string{"message": "inCorrectEmailPassword"})
 		return
 	}
 
-	var JWT_SECRET = []byte("SecretYouShouldHide")
+	var JWT_SECRET = []byte(config.Get("JWT_SECRET"))
 
 	accessToken, accessTokenErr := generateAccessToken(user, JWT_SECRET)
 	refreshToken, refreshTokenErr := generateRefreshToken(JWT_SECRET)
@@ -46,6 +45,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	go storeRefreshToken(refreshToken, user.ID)
+
 	util.Res.Writer(w).Status().Data(map[string]any{
 		"accessToken":  accessToken,
 		"refreshToken": refreshToken,
@@ -53,31 +54,26 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func generateAccessToken(user models.User, JWT_SECRET []byte) (string, error) {
-	token := jwt.New(jwt.SigningMethodEdDSA)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("ACCESS_TOKEN_EXPIRATION"))) * time.Minute)
-	claims["authorized"] = true
-	claims["user"] = user.ID
-	tokenString, err := token.SignedString(JWT_SECRET)
-
-	if err != nil {
-		return "", err
+func storeRefreshToken(token string, userId uint) {
+	refreshToken := models.RefreshToken{
+		RefreshToken: token,
+		UserId:       userId,
 	}
 
-	return tokenString, nil
+	db.Query().Create(&refreshToken)
+}
+
+func generateAccessToken(user models.User, JWT_SECRET []byte) (string, error) {
+	claims := make(map[string]interface{})
+	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("ACCESS_TOKEN_EXPIRATION"))) * time.Minute)
+	claims["user"] = user.ID
+
+	return util.Token().CreateToken(claims)
 }
 
 func generateRefreshToken(JWT_SECRET []byte) (string, error) {
-	token := jwt.New(jwt.SigningMethodEdDSA)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("REFRESH_TOKEN_EXPIRATION"))) * time.Minute)
+	claims := make(map[string]interface{})
+	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("REFRESH_TOKEN_EXPIRATION"))) * (time.Hour * 24))
 
-	tokenString, err := token.SignedString(JWT_SECRET)
-
-	if err != nil {
-		return "", err
-	}
-
-	return tokenString, nil
+	return util.Token().CreateToken(claims)
 }

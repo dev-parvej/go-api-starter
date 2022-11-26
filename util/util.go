@@ -44,3 +44,11 @@ func ParseInt(s string) int {
 
 	return i
 }
+
+func CopyMap(from map[string]interface{}, to map[string]interface{}) map[string]interface{} {
+	for key, value := range from {
+		to[key] = value
+	}
+
+	return to
+}
