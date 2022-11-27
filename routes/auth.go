@@ -16,5 +16,7 @@ func AuthRouteHandler(r *mux.Router) {
 
 	authRouter.HandleFunc("/log-out", func(w http.ResponseWriter, r *http.Request) {
 		//To Implement log out code here
-	})
+	}).Methods("get")
+
+	authRouter.HandleFunc("/refresh", controller.CreateRefreshToken).Methods("post")
 }
