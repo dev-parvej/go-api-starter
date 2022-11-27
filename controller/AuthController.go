@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/dev-parvej/go-api-starter-sql/config"
@@ -35,10 +36,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var JWT_SECRET = []byte(config.Get("JWT_SECRET"))
-
-	accessToken, accessTokenErr := generateAccessToken(user, JWT_SECRET)
-	refreshToken, refreshTokenErr := generateRefreshToken(JWT_SECRET)
+	accessToken, accessTokenErr := util.Token().AccessToken(user.ID)
+	refreshToken, refreshTokenErr := util.Token().RefreshToken()
 
 	if accessTokenErr != nil || refreshTokenErr != nil {
 		util.Res.Writer(w).Status500().Data(map[string]any{"message": accessTokenErr.Error()})
@@ -48,32 +47,21 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	go storeRefreshToken(refreshToken, user.ID)
 
 	util.Res.Writer(w).Status().Data(map[string]any{
-		"accessToken":  accessToken,
-		"refreshToken": refreshToken,
-		"user":         user,
+		"access_token":  accessToken,
+		"refresh_token": refreshToken,
+		"user":          user,
 	})
 }
 
-func storeRefreshToken(token string, userId uint) {
+func storeRefreshToken(token string, userId int) {
+	mut := &sync.Mutex{}
+	mut.Lock()
 	refreshToken := models.RefreshToken{
 		RefreshToken: token,
 		UserId:       userId,
+		ValidUntil:   time.Now().Add(time.Duration(util.ParseInt(config.Get("REFRESH_TOKEN_EXPIRATION"))) * (time.Hour * 24)),
 	}
 
 	db.Query().Create(&refreshToken)
-}
-
-func generateAccessToken(user models.User, JWT_SECRET []byte) (string, error) {
-	claims := make(map[string]interface{})
-	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("ACCESS_TOKEN_EXPIRATION"))) * time.Minute)
-	claims["user"] = user.ID
-
-	return util.Token().CreateToken(claims)
-}
-
-func generateRefreshToken(JWT_SECRET []byte) (string, error) {
-	claims := make(map[string]interface{})
-	claims["exp"] = time.Now().Add(time.Duration(util.ParseInt(config.Get("REFRESH_TOKEN_EXPIRATION"))) * (time.Hour * 24))
-
-	return util.Token().CreateToken(claims)
+	defer mut.Unlock()
 }
