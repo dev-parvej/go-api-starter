@@ -18,6 +18,17 @@ func (r *response) Status422() *response {
 	return r
 }
 
+func (r *response) Status403() *response {
+	r.status = http.StatusForbidden
+
+	return r
+}
+
+func (r *response) Status500() *response {
+	r.status = http.StatusInternalServerError
+	return r
+}
+
 func (r *response) Status(status ...int) *response {
 	statusCode := http.StatusAccepted
 

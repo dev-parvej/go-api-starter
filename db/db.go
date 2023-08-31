@@ -39,6 +39,6 @@ func Table(table string) *gorm.DB {
 	return dbInstance.Table(table)
 }
 
-func DB() *gorm.DB {
+func Query() *gorm.DB {
 	return connection()
 }

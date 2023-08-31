@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/dev-parvej/go-api-starter-sql/config"
-	db "github.com/dev-parvej/go-api-starter-sql/db/migration"
+	migration "github.com/dev-parvej/go-api-starter-sql/db/migration"
 	"github.com/dev-parvej/go-api-starter-sql/middleware"
 	"github.com/dev-parvej/go-api-starter-sql/routes"
 	"github.com/gorilla/mux"
@@ -19,7 +19,7 @@ func main() {
 	if len(os.Args) > 1 {
 		migrateAction := os.Args[1]
 		if strings.Contains(migrateAction, "db") {
-			db.Migrate(migrateAction)
+			migration.Migrate(migrateAction)
 			return
 		}
 	}

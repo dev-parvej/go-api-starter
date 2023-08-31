@@ -10,11 +10,7 @@ import (
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var createUserDto dto.CreateUserDto
-
-	util.JsonDecoder(r, &createUserDto)
-
-	errors := util.ValidateStruct(createUserDto)
+	createUserDto, errors := util.ValidateRequest(r, dto.CreateUserDto{})
 
 	if errors != nil {
 		util.Res.Writer(w).Status422().Data(errors.Error())
@@ -23,7 +19,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	var existingUser models.User
 
-	db.DB().First(&existingUser, "email=?", createUserDto.Email)
+	db.Query().First(&existingUser, "email=?", createUserDto.Email)
 
 	if !existingUser.IsEmpty() {
 		util.Res.Writer(w).Status422().Data(map[string]any{"message": "UniqueEmail"})
@@ -39,7 +35,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		Password:  password,
 	}
 
-	db.Model(models.User{}).Create(&user)
+	db.Query().Create(&user)
 
 	util.Res.Writer(w).Status().Data(user)
 }
