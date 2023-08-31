@@ -10,6 +10,7 @@ import (
 
 func AuthRouteHandler(r *mux.Router) {
 	r.HandleFunc("/api/login", controller.Login).Methods("POST")
+	r.HandleFunc("/api/refresh", controller.GrantAccessToken).Methods("post")
 
 	authRouter := r.PathPrefix("/api").Subrouter()
 	authRouter.Use(middleware.Authenticate)
@@ -18,5 +19,4 @@ func AuthRouteHandler(r *mux.Router) {
 		//To Implement log out code here
 	}).Methods("get")
 
-	authRouter.HandleFunc("/refresh", controller.CreateRefreshToken).Methods("post")
 }

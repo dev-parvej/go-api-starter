@@ -23,6 +23,12 @@ func JsonDecoder(r *http.Request, target any) {
 	json.NewDecoder(r.Body).Decode(target)
 }
 
+func ValidateRequest[T any](r *http.Request, target T) (T, error) {
+	JsonDecoder(r, &target)
+
+	return target, ValidateStruct(target)
+}
+
 func ValidateStruct(form interface{}) error {
 	err := validator.New().Struct(form)
 	if err == nil {
