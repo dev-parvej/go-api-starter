@@ -13,10 +13,7 @@ import (
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	var loginDto dto.LoginDto
-	util.JsonDecoder(r, &loginDto)
-
-	error := util.ValidateStruct(loginDto)
+	loginDto, error := util.ValidateRequest(r, dto.LoginDto{})
 
 	if error != nil {
 		util.Res.Status422().Writer(w).Data(error.Error())

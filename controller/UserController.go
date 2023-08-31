@@ -10,11 +10,7 @@ import (
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var createUserDto dto.CreateUserDto
-
-	util.JsonDecoder(r, &createUserDto)
-
-	errors := util.ValidateStruct(createUserDto)
+	createUserDto, errors := util.ValidateRequest(r, dto.CreateUserDto{})
 
 	if errors != nil {
 		util.Res.Writer(w).Status422().Data(errors.Error())
