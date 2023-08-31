@@ -6,8 +6,12 @@ Note: This is just a simple starter project I created while learning golang. A l
 
 ## Feature 
 * Dockerized
+* Database using gorm
 * Migration
-* Auth
+* Config using dotenv
+* Validation using validator
+* Route using Mux
+* Auth using JWT
 
 ## Tech Stack
 * Go
