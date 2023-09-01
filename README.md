@@ -20,17 +20,17 @@ Make sure you have docker installed.
 
 1. Clone the repo
 
-    ```git clone git@github.com:dev-parvej/go-api-starter-sql.git```
+    `git clone git@github.com:dev-parvej/go-api-starter-sql.git`
 2. Copy env from env.example
 
-    ```cp .env.example .env```
+    `cp .env.example .env`
 
 3. Run
 
-    ```docker-compose up --build```
+    `docker-compose up --build`
 
 You only have to include ```--build``` on the first run. 
 
 You can also run the project without docker. For that you have to install the MySql and Go separately and then run 
 
-```go main.go```
+`go main.go`
