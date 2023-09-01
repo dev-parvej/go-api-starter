@@ -18,14 +18,14 @@ Note: This is just a simple starter project I created while learning golang. A l
 ### Installation
 Make sure you have docker installed.
 
-*Clone the repo
+* Clone the repo
 
     `git clone git@github.com:dev-parvej/go-api-starter-sql.git`
-*Copy env from env.example
+* Copy env from env.example
 
     `cp .env.example .env`
 
-*Run
+* Run
 
     `docker-compose up --build`
 
