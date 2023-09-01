@@ -20,7 +20,9 @@ Make sure you have docker installed.
 
 * Clone the repo
 
-    `git clone git@github.com:dev-parvej/go-api-starter-sql.git`
+    ```bash
+    $ git clone git@github.com:dev-parvej/go-api-starter-sql.git
+
 * Copy env from env.example
 
     `cp .env.example .env`
