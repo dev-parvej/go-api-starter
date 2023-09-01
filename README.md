@@ -8,12 +8,12 @@ Note: This is just a simple starter project I created while learning golang. A l
 
 ## Feature 
 * Dockerized
-* Database using gorm
+* Database using [gorm](https://gorm.io/index.html)
 * Migration
-* Config using dotenv
-* Validation using validator
-* Route using Mux
-* Auth using JWT
+* Config using [dotenv](https://github.com/joho/godotenv)
+* Validation using [validator](https://github.com/go-playground/validator)
+* Route using [Mux](https://github.com/gorilla/mux)
+* Auth using [JWT](https://github.com/golang-jwt/jwt)
 
 ### Installation
 Make sure you have docker installed.
