@@ -3,8 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/dev-parvej/go-api-starter-sql/db"
-	"github.com/dev-parvej/go-api-starter-sql/models"
+	"github.com/dev-parvej/go-api-starter-sql/db/repository"
 	"github.com/dev-parvej/go-api-starter-sql/util"
 )
 
@@ -20,7 +19,7 @@ func LogOut(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.Query().Where("refresh_token = ?", logOutDto.RefreshToken).Delete(models.RefreshToken{})
+	repository.RefreshTokenRepository.Delete(logOutDto.RefreshToken)
 
 	util.Res.Writer(w).Status().Data(map[string]string{"message": "LogOutSuccessful"})
 }
