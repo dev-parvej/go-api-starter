@@ -1,8 +1,13 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type RefreshToken struct {
+	gorm.DeletedAt
 	ID           int       `json:"id" gorm:"column:id;primarykey"`
 	RefreshToken string    `json:"refresh_token" gorm:"column:refresh_token;type:varchar(256)"`
 	ValidUntil   time.Time `json:"valid_until" gorm:"column:valid_until;type:date"`
